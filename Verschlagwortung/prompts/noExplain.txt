@@ -1,0 +1,14 @@
+Memorize this dictionary of topic titles and explanations: {{topics_explanations}}. 
+
+Keep these topics in mind while you are reading a letter from the correspondence of Heinrich Bullinger (1504-1575). 
+
+Letter content: {{content}}
+
+Now, assign two or three (if the letter is long) topics from the dictionary to the letter. Select only topics that are truly central to the letter and could potentially serve as the main reason for it to be written. Do not select topics based on brief mentions. If topics overlap, choose only the one that is most central.
+
+Provide the result as a JSON object like this: 
+{{
+    "predefined_topics": [
+        "topic1", "topic2"
+        ]
+}}

@@ -1,0 +1,36 @@
+{
+    "Everyday Life": {
+      "description": "Daily life events, routines, and mundane activities, including food, cooking, buying and selling, going to the market, doing things around the house, etc."
+    },
+    "Requests and Petitions": {
+      "description": "Explicit or implicit requests for action, support, guidance, assistance, or favors directed at specific individuals or groups. This INCLUDES appeals for help, efforts to exert influence, or attempts to activate personal or political networks. The request must be addressed to a human recipient and serve as a concrete reason for writing the letter. This topic EXCLUDES prayers and hopes for divine intervention, as well as requests for news, updates, or general communication."
+    },
+    "Education System": {
+      "description": "Covers discussions on educational institutions, the recruitment and placement of scholars, theological and humanist teaching, and the curriculum of schools and academies. Includes efforts to fund and establish schools, exchanges between scholars, and the organization of universities."
+    },
+    "Books, Printing, and Publishing": {
+      "description": "Discussions about printing books, engagements with printers, availability of printed volumes, the circulation and influence of printed works."
+    },
+    "Faith and Doctrine in Practice": {
+      "description": "Discussions on the application of religious doctrine in daily life and church governance. This includes critiques and recommendations on worship practices, rituals, and clergy roles, such as how sacraments are administered or how church ceremonies should be conducted. The focus is on the practical, institutional, and behavioral consequences of doctrine rather than theological disputes over belief systems. For example, debates over clerical vestments or the proper execution of baptism fall into this category."
+    },
+    "Faith and Doctrine in Theory": {
+      "description": "Theological and doctrinal discussions that define and defend Reformed beliefs, including biblical interpretation, predestination, church discipline, and theological disputes such as the Eucharist controversy (Abendmahlstreit). This category covers conflicts over doctrine and religious teachings rather than their implementation in worship or daily practice. For example, debates over the nature of Christ’s presence in the Eucharist or the scriptural basis for church governance belong here."
+    },
+    "Disasters and Natural Phenomena": {
+      "description": "Extraordinary natural events, disasters, and phenomena, for example, harvest failures, meteorological observations, celestial events, fires, or floods."
+    },
+    "Illness, Death, and Recovery in Society": {
+      "description": "Broader societal descriptions of the plague or other illnesses, recovery, and nonviolent death caused by illness, old age, or childbirth (including the deaths of both mother and child). This excludes deaths caused by war, persecution, catastrophe, or violence."
+    },
+    "Illness, Death, and Recovery among Family and Close Friends": {
+      "description": "The author writes about their own experience or describes the suffering and mourning within the household, among family, or close friends caused by sickness or death of a loved one. This also includes mentions of recovery and healing, either of the author themselves or those close to them."
+    },
+    "Military and Political Affairs": {
+      "description": "Reports, discussions, or analyses of wars, military actions, diplomatic alliances, or significant political strategies. This includes direct involvement in military or state affairs, commentary on rulers’ policies, or detailed assessments of governmental decisions. General complaints about persecution, injustice, or governance do not qualify unless the letter directly engages with military or political decision-making at a strategic level."
+    },
+    "Religious Persecution and Martyrdom": {
+      "description": "Discussions of persecutions and suffering by Protestants, including exile, imprisonment, execution, martyrdom, massacres, and related suffering and fears of these events. This includes personal experiences or fears of persecution."
+    }
+  }
+  

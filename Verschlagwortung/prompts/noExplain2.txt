@@ -1,0 +1,10 @@
+Letter content: {{content}}
+
+Assign two or three topics (if the letter is long) from the list of topics to the letter. Select only topics that are truly central to the letter's content. Do not assign topics based on brief mentions, focus only on the main themes conveyed by the author. If topics overlap, choose the most central one rather than assigning multiple similar topics.
+
+Provide the result as a JSON object like this: 
+{
+    "predefined_topics": [
+        "topic1", "topic2"
+        ]
+}

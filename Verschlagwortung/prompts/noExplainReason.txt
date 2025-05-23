@@ -1,0 +1,19 @@
+Read the English translation of a letter from the correspondence of Heinrich Bullinger (1504-1575). 
+
+Letter content: {{content}}
+
+Why did the author write the letter? Think of the main reasons.
+
+Can you find these reasons among these topic: {{topics_explanations}}. 
+
+If you find the main reasons among the topics, select only the topics that are trully central to the content of the letter. If two topics overlap, pick the most central one. 
+
+Return the titles of the most central topics as a JSON object like this: 
+
+{{
+    "predefined_topics": [
+        "topic1", "topic2"
+        ],
+    "main_reasons_that_matched_topics":["reason1", "reason2"],
+    "main_reasons_that_didnt_match_any_topics":["reason1", "reason2"]
+}}
