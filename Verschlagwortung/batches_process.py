@@ -85,34 +85,27 @@ def download_batch_results(output_file_id, batch_name):
     print(f"✅ Results downloaded: {results_file}")
 
 if __name__ == "__main__":
-    # Load the latest batch file name
-    try:
-        with open("latest_batches.txt", "r", encoding="utf-8") as f:
-            batch_files = [line.strip() for line in f.readlines()]
+    # # Load the latest batch file name
+    # try:
+    #     with open("latest_batches.txt", "r", encoding="utf-8") as f:
+    #         batch_files = [line.strip() for line in f.readlines()]
 
-    except FileNotFoundError:
-        print("❌ No batch file found. Please run `create_batch.py` first.")
-        exit(1)
-
+    # except FileNotFoundError:
+    #     print("❌ No batch file found. Please run `create_batch.py` first.")
+    #     exit(1)
     batch_dir = "batches_to_process_gpt-4o"
 
-    # for jsonl_file in os.listdir(batch_dir):
-    #     if not jsonl_file.endswith(".jsonl"):
-    #         continue
-    #     print(f"Processing batch file: {jsonl_file}")
-    for jsonl_file in batch_files:
+    for jsonl_file in os.listdir(batch_dir):
+        if not jsonl_file.endswith(".jsonl"):
+            continue
+        print(f"Processing batch file: {jsonl_file}")
 
-        # Upload the JSONL file
-        jsonl_file_input = os.path.join(batch_dir, jsonl_file)
-        print(f"Processing batch file: {jsonl_file_input}")
-        file_id = upload_jsonl_file(jsonl_file_input)
+        jsonl_file_path = os.path.join(batch_dir, jsonl_file)
+        file_id = upload_jsonl_file(jsonl_file_path)
 
-        # Submit the batch request
         batch_id = submit_batch_request(file_id)
-
-        # Wait for processing to complete
         output_file_id = wait_for_batch_completion(batch_id)
 
-        # Download results
         if output_file_id:
             download_batch_results(output_file_id, jsonl_file.replace(".jsonl", ""))
+

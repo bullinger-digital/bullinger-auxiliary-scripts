@@ -1,6 +1,1 @@
-batches_to_process_gpt-4o/batch_gpt-4o_20250523_121306_part_1-2263.jsonl
-batches_to_process_gpt-4o/batch_gpt-4o_20250523_121307_part_2264-4563.jsonl
-batches_to_process_gpt-4o/batch_gpt-4o_20250523_121308_part_4564-6952.jsonl
-batches_to_process_gpt-4o/batch_gpt-4o_20250523_121309_part_6953-9428.jsonl
-batches_to_process_gpt-4o/batch_gpt-4o_20250523_121310_part_9429-11570.jsonl
-batches_to_process_gpt-4o/batch_gpt-4o_20250523_121311_part_11571-13159.jsonl
+batches_to_process_gpt-4o/batch_gpt-4o_20250616_145859_part_45-13157.jsonl

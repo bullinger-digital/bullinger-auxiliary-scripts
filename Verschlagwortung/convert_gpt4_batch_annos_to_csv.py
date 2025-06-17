@@ -27,7 +27,7 @@ topics_list = list(topics_data.keys())
 
 # make a list of empty files
 empty_files = []
-with open("empty_files.txt", "r", encoding="utf-8") as f:
+with open("empty_files2.txt", "r", encoding="utf-8") as f:
     for line in f:
         empty_file = re.sub(".txt", "", line.strip())
         empty_files.append(empty_file)

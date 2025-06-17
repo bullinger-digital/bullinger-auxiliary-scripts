@@ -1,6 +1,16 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import argparse
+
+argparser = argparse.ArgumentParser(description="Process topic assignments from two models.")
+argparser.add_argument("--gpt_file", '-gpt', type=str, help="Path to a csv file with GPT-4o model annotations.")
+argparser.add_argument("--deepseek_file", '-ds', type=str, help="Path to a csv file with DeepSeek model annotations.")
+argparser.add_argument("--output_file", '-o', type=str, help="Path to a csv file that saves the merged topics IDs.")
+argparser.add_argument("--mapping_file", '-m', type=str, default="topic_mapping.csv", help="Path to save the topic mapping file.")
+argparser.add_argument("--plot_file", '-p', type=str, help="Path to save the stacked bar plot image.")
+
+args = argparser.parse_args()
 
 # Plot style
 sns.set(style="whitegrid")
@@ -41,11 +51,11 @@ mapping_df = pd.DataFrame([
     {"Topic Number": topic_number_map[topic], "Topic (DE)": topics_dict[topic], "Topic (EN)": topic}
     for topic in topics
 ])
-mapping_df.to_csv("topic_mapping.csv", index=False)
+mapping_df.to_csv(args.mapping_file, index=False, encoding='utf-8')
 
 # Load data
-df1 = pd.read_csv('annotations/models/merged_annotated_batches_gpt-4o.csv')
-df2 = pd.read_csv('annotations/models/deepseek-chat_20250320_txts_noExplain2_topics4_en.csv')
+df1 = pd.read_csv(args.gpt_file, encoding='utf-8')
+df2 = pd.read_csv(args.deepseek_file, encoding='utf-8')
 merged_df = pd.merge(df1, df2, on="File ID", suffixes=('_gpt-4o', '_deepseek'))
 
 # Tracking
@@ -109,7 +119,7 @@ for _, row in merged_df.iterrows():
 
 # Save file with topic IDs only
 df_ids = pd.DataFrame(processed_rows_ids, columns=['File ID', 'Topics'])
-df_ids.to_csv('merged_topics_ids.csv', index=False)
+df_ids.to_csv(args.output_file, index=False, encoding='utf-8')
 
 print("✅ Topic ID mapping saved to: topic_mapping.csv")
 print("✅ Topic ID list per file saved to: merged_topics_ids.csv")
@@ -148,38 +158,42 @@ gpt_only_values = [assigned_by_gpt_only[t] for t in topics]
 deepseek_only_values = [assigned_by_deepseek_only[t] for t in topics]
 both_values = [assigned_by_both[t] for t in topics]
 
-# Create stacked bar plot
-plt.figure(figsize=(10, 6))
-bar_width = 0.6
+# create a plot if arguments are provided
+if args.plot_file:
 
-# Plot 'both' as base, then GPT-only, then Deepseek-only
-plt.barh([topics_dict[t] for t in topics], both_values, label="Beide Modelle", color="green", height=bar_width)
-plt.barh([topics_dict[t] for t in topics], gpt_only_values, left=both_values, label="Nur GPT-4o", color="skyblue", height=bar_width)
-plt.barh(
-    [topics_dict[t] for t in topics],
-    deepseek_only_values,
-    left=[i + j for i, j in zip(both_values, gpt_only_values)],
-    label="Nur Deepseek",
-    color="lightcoral",
-    height=bar_width
-)
+    # Create stacked bar plot
+    plt.figure(figsize=(10, 6))
+    bar_width = 0.6
 
-# Add labels and title in German
-plt.xlabel("Anzahl der zugewiesenen Dateien")
-plt.ylabel("")
-plt.title("Zuweisungen durch beide Modelle (gestapelt)")
+    # Plot 'both' as base, then GPT-only, then Deepseek-only
+    plt.barh([topics_dict[t] for t in topics], both_values, label="Beide Modelle", color="green", height=bar_width)
+    plt.barh([topics_dict[t] for t in topics], gpt_only_values, left=both_values, label="Nur GPT-4o", color="skyblue", height=bar_width)
+    plt.barh(
+        [topics_dict[t] for t in topics],
+        deepseek_only_values,
+        left=[i + j for i, j in zip(both_values, gpt_only_values)],
+        label="Nur Deepseek",
+        color="lightcoral",
+        height=bar_width
+    )
 
-# Add legend to the middle right
-plt.legend(
-    title="Modellzuweisung",
-    loc='center left',
-    bbox_to_anchor=(0.6, 0.65),
-    fontsize=12,
-    title_fontsize=14
-)
+    # Add labels and title in German
+    plt.xlabel("Anzahl der zugewiesenen Dateien")
+    plt.ylabel("")
+    plt.title("Zuweisungen durch beide Modelle (gestapelt)")
 
-# Show the plot
-plt.tight_layout()
-plt.savefig("gestapelte_zuweisungen_modelle.png")
-plt.show()
+    # Add legend to the middle right
+    plt.legend(
+        title="Modellzuweisung",
+        loc='center left',
+        bbox_to_anchor=(0.6, 0.65),
+        fontsize=12,
+        title_fontsize=14
+    )
+
+    # Show the plot
+    plt.tight_layout()
+    plt.savefig(args.plot_file, dpi=300)
+    print(f"✅ Stacked bar plot saved to: {args.plot_file}")
+    plt.show()
 
