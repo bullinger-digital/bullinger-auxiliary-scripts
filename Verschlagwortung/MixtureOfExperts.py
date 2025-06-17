@@ -3,10 +3,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import argparse
 
+# example use:
+# python3 MixtureOfExperts.py --gpt_file annotations/models/final_gpt-4o_annotations.csv --deepseek_file annotations/models/final_deepseek-chat_annotations.csv --output_file merged_topics_ids.csv --mapping_file topic_mapping.csv --plot_file stacked_bar_plot.png  
+
 argparser = argparse.ArgumentParser(description="Process topic assignments from two models.")
 argparser.add_argument("--gpt_file", '-gpt', type=str, help="Path to a csv file with GPT-4o model annotations.")
 argparser.add_argument("--deepseek_file", '-ds', type=str, help="Path to a csv file with DeepSeek model annotations.")
-argparser.add_argument("--output_file", '-o', type=str, help="Path to a csv file that saves the merged topics IDs.")
+argparser.add_argument("--output_file", '-o', type=str, help="Path to a csv file that saves the merged topics IDs, usually 'merged_topics_ids.csv'.")
 argparser.add_argument("--mapping_file", '-m', type=str, default="topic_mapping.csv", help="Path to save the topic mapping file.")
 argparser.add_argument("--plot_file", '-p', type=str, help="Path to save the stacked bar plot image.")
 
@@ -130,36 +133,35 @@ print("- 🔒 STRICT INTERSECTION: Assigned only if BOTH models ≥ 90. Topics l
 print("- 🔄 FLEXIBLE UNION: Assigned if ONE model ≥ 60 and the OTHER ≥ 20. All other topics were assigned based on the flexible union logic.\n")
 
 # Stacked Bar Plot for Files Assigned by Both Models for Each Topic
-
-# Calculate the number of files assigned by each model (separately and together)
-assigned_by_gpt_only = {t: 0 for t in topics}
-assigned_by_deepseek_only = {t: 0 for t in topics}
-assigned_by_both = {t: 0 for t in topics}
-
-for i, file_id in enumerate(merged_df["File ID"]):
-    for topic in topics:
-        col_model1 = topic + '_gpt-4o'
-        col_model2 = topic + '_deepseek'
-
-        # Get assignment status for both models
-        val1 = float(merged_df.at[i, col_model1])
-        val2 = float(merged_df.at[i, col_model2])
-
-        # Count assignments for each model
-        if val1 >= thresholds.get(topic, 60) and val2 >= thresholds.get(topic, 60):
-            assigned_by_both[topic] += 1
-        elif val1 >= thresholds.get(topic, 60):
-            assigned_by_gpt_only[topic] += 1
-        elif val2 >= thresholds.get(topic, 60):
-            assigned_by_deepseek_only[topic] += 1
-
-# Prepare the data for stacked bar plot
-gpt_only_values = [assigned_by_gpt_only[t] for t in topics]
-deepseek_only_values = [assigned_by_deepseek_only[t] for t in topics]
-both_values = [assigned_by_both[t] for t in topics]
-
 # create a plot if arguments are provided
 if args.plot_file:
+
+    # Calculate the number of files assigned by each model (separately and together)
+    assigned_by_gpt_only = {t: 0 for t in topics}
+    assigned_by_deepseek_only = {t: 0 for t in topics}
+    assigned_by_both = {t: 0 for t in topics}
+
+    for i, file_id in enumerate(merged_df["File ID"]):
+        for topic in topics:
+            col_model1 = topic + '_gpt-4o'
+            col_model2 = topic + '_deepseek'
+
+            # Get assignment status for both models
+            val1 = float(merged_df.at[i, col_model1])
+            val2 = float(merged_df.at[i, col_model2])
+
+            # Count assignments for each model
+            if val1 >= thresholds.get(topic, 60) and val2 >= thresholds.get(topic, 60):
+                assigned_by_both[topic] += 1
+            elif val1 >= thresholds.get(topic, 60):
+                assigned_by_gpt_only[topic] += 1
+            elif val2 >= thresholds.get(topic, 60):
+                assigned_by_deepseek_only[topic] += 1
+
+    # Prepare the data for stacked bar plot
+    gpt_only_values = [assigned_by_gpt_only[t] for t in topics]
+    deepseek_only_values = [assigned_by_deepseek_only[t] for t in topics]
+    both_values = [assigned_by_both[t] for t in topics]
 
     # Create stacked bar plot
     plt.figure(figsize=(10, 6))

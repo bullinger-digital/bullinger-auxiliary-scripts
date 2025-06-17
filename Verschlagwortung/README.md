@@ -24,7 +24,11 @@ This repository implements a full pipeline for extracting themes from the Bullin
 - `convert_gpt4_batch_annos_to_csv.py` 
 - `convert_deepseek_annos_to_csv.py`
 
-#### 6. `MixtureOfExperts.py` performs Mixture of Experts (MoE)
+#### 6. (Optional) Merge new and old annotations 
+If new annotations are produced, merge the two csv files together to create a final csv file for each model
+- `concat_model_annos.py.py` file1 file2 
+
+#### 7. `MixtureOfExperts.py` performs Mixture of Experts (MoE)
 
 Combines annotations from both models using topic-specific logic:
 
@@ -35,11 +39,5 @@ Combines annotations from both models using topic-specific logic:
 
 **Outputs:**
 - `topic_mapping.csv`: English ↔ German ↔ ID topic mapping
-- A csv file with 2 columns: File ID (int) and Topics (str), which is a list of topic IDs mapped in the topic_mapping.csv 
+- A csv file (usually name `merged_topics_ids.csv`) with 2 columns: File ID (int) and Topics (str), which is a list of topic IDs mapped in the topic_mapping.csv 
 - (optional) `gestapelte_zuweisungen_modelle.png`: Stacked bar plot of topic assignments by both models 
-
-#### 7. (Optional) Merge new and old annotations 
-If new annotations are produced, merge the two csv files together to create the final file
-- `combine_merged_topics_ids_files.py` file1 file2
-- output: `merged_topics_ids.csv`
-
